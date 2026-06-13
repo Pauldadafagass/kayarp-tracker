@@ -1,7 +1,7 @@
 {
-  "name": "notruf-hamburg-bot",
-  "version": "1.0.0",
-  "description": "Notruf Hamburg RP - Bot Monitor",
+  "name": "private-server-monitor",
+  "version": "3.0.0",
+  "description": "x1qssipp Private Server Monitor",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
