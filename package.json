@@ -1,6 +1,6 @@
 {
-  "name": "private-server-monitor",
-  "version": "3.0.0",
+  "name": "notruf-hamburg-private",
+  "version": "1.0.0",
   "description": "x1qssipp Private Server Monitor",
   "main": "server.js",
   "scripts": {
