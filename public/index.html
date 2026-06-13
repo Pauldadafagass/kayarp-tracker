@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notruf Hamburg RP - Live Spieleranzahl</title>
+    <meta property="og:title" content="Notruf Hamburg RP - Spieleranzahl">
+    <meta property="og:description" content="Live Spieleranzahl für Notruf Hamburg Roleplay">
+    <meta name="theme-color" content="#0066ff">
     <style>
         * {
             margin: 0;
@@ -12,26 +15,28 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0f;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #06060d;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
             background-image: 
-                radial-gradient(ellipse at top, rgba(0,100,255,0.1), transparent 50%),
-                radial-gradient(ellipse at bottom, rgba(0,50,150,0.05), transparent 50%);
+                radial-gradient(ellipse at 50% 0%, rgba(0,102,255,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(0,50,200,0.05) 0%, transparent 50%);
         }
 
         .container {
-            background: #111118;
-            border: 1px solid #222;
-            border-radius: 20px;
-            padding: 35px 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            background: #0d0d16;
+            border: 1px solid #1a1a2e;
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.6),
+                0 0 100px rgba(0,102,255,0.05);
             text-align: center;
-            max-width: 480px;
+            max-width: 500px;
             width: 100%;
             position: relative;
         }
@@ -40,135 +45,172 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 20px;
-            right: 20px;
+            left: 30px;
+            right: 30px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #0066ff, #0044cc, transparent);
+            background: linear-gradient(90deg, transparent, #0066ff, #4488ff, transparent);
         }
 
-        .game-logo {
-            font-size: 70px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 20px rgba(0,100,255,0.3));
+        .game-icon {
+            font-size: 72px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(0,102,255,0.3));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         h1 {
-            color: white;
-            font-size: 28px;
+            color: #ffffff;
+            font-size: 32px;
             font-weight: 800;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             letter-spacing: -0.5px;
         }
 
-        .game-subtitle {
-            color: #0066ff;
-            font-size: 12px;
+        .subtitle {
+            color: #4488ff;
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 5px;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
         }
 
-        .server-badge {
+        .server-code-badge {
             display: inline-block;
-            background: rgba(0,100,255,0.1);
-            color: #4488ff;
-            padding: 4px 12px;
+            background: rgba(0,102,255,0.1);
+            color: #6699ff;
+            padding: 5px 14px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 13px;
             font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
+            font-weight: bold;
+            letter-spacing: 2px;
             margin-bottom: 20px;
-            border: 1px solid rgba(0,100,255,0.2);
+            border: 1px solid rgba(0,102,255,0.2);
         }
 
-        .status-indicator {
+        .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 8px 20px;
             border-radius: 100px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             margin-bottom: 25px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .status-indicator.live {
+        .status-badge.live {
             background: rgba(46, 213, 115, 0.1);
             color: #2ed573;
-            border: 1px solid rgba(46, 213, 115, 0.2);
+            border: 1px solid rgba(46, 213, 115, 0.25);
         }
 
-        .status-indicator.empty {
+        .status-badge.empty {
             background: rgba(255, 165, 0, 0.1);
             color: #ffa500;
-            border: 1px solid rgba(255, 165, 0, 0.2);
+            border: 1px solid rgba(255, 165, 0, 0.25);
         }
 
-        .status-indicator.error {
+        .status-badge.error {
             background: rgba(255, 50, 50, 0.1);
-            color: #ff3232;
-            border: 1px solid rgba(255, 50, 50, 0.2);
+            color: #ff4444;
+            border: 1px solid rgba(255, 50, 50, 0.25);
         }
 
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
+        .status-dot {
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: currentColor;
-            animation: pulse 2s infinite;
+        }
+
+        .status-badge.live .status-dot {
+            animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
         }
 
-        .count-display {
-            background: linear-gradient(135deg, rgba(0,100,255,0.08), rgba(0,50,200,0.03));
-            border: 2px solid rgba(0,100,255,0.15);
-            border-radius: 20px;
+        .counter-box {
+            background: linear-gradient(135deg, rgba(0,102,255,0.08), rgba(0,60,200,0.03));
+            border: 2px solid rgba(0,102,255,0.2);
+            border-radius: 24px;
             padding: 35px 20px;
             margin: 20px 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .big-number {
-            font-size: 130px;
+        .counter-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,102,255,0.05) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .player-number {
+            font-size: 140px;
             font-weight: 900;
-            background: linear-gradient(135deg, #0066ff, #4488ff);
+            background: linear-gradient(180deg, #4d94ff 0%, #0066ff 50%, #0044cc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1;
             margin-bottom: 5px;
-            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            transition: all 0.5s ease;
         }
 
-        .big-label {
-            color: #666;
+        .player-label {
+            color: #5577aa;
             font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
+            position: relative;
+            z-index: 1;
         }
 
-        .stats-grid {
+        .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin: 20px 0;
         }
 
-        .stat-card {
+        .info-item {
             background: rgba(255,255,255,0.02);
-            border: 1px solid #1a1a25;
-            border-radius: 12px;
-            padding: 15px;
+            border: 1px solid #1c1c2e;
+            border-radius: 14px;
+            padding: 16px;
             text-align: left;
+            transition: all 0.3s;
         }
 
-        .stat-label {
-            color: #555;
+        .info-item:hover {
+            border-color: #2a2a45;
+        }
+
+        .info-label {
+            color: #556;
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -176,50 +218,58 @@
             font-weight: 600;
         }
 
-        .stat-value {
-            color: white;
-            font-size: 18px;
+        .info-value {
+            color: #fff;
+            font-size: 17px;
             font-weight: 700;
         }
 
-        .stat-value.code {
-            color: #4488ff;
+        .info-value.code {
+            color: #6699ff;
             font-family: 'Courier New', monospace;
-            font-size: 13px;
+            font-size: 12px;
             word-break: break-all;
+            letter-spacing: 1px;
         }
 
-        .join-button {
+        .join-btn {
             display: inline-block;
             background: linear-gradient(135deg, #0066ff, #0044cc);
             color: white;
             text-decoration: none;
-            padding: 15px 35px;
-            border-radius: 12px;
+            padding: 16px 38px;
+            border-radius: 14px;
             font-size: 15px;
             font-weight: 700;
-            margin: 10px 0;
+            margin: 12px 0;
             transition: all 0.3s;
             letter-spacing: 1px;
             text-transform: uppercase;
+            border: none;
+            cursor: pointer;
         }
 
-        .join-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,100,255,0.3);
+        .join-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,102,255,0.35);
+            background: linear-gradient(135deg, #1a75ff, #0055dd);
         }
 
-        .auto-refresh {
-            color: #444;
+        .join-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .refresh-footer {
+            color: #3a3a50;
             font-size: 11px;
-            margin-top: 15px;
+            margin-top: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
         }
 
-        .refresh-dot {
+        .refresh-indicator {
             width: 5px;
             height: 5px;
             border-radius: 50%;
@@ -227,24 +277,25 @@
             animation: pulse 2s infinite;
         }
 
-        .error-msg {
+        .error-box {
             background: rgba(255,50,50,0.05);
             border: 1px solid rgba(255,50,50,0.2);
             border-radius: 12px;
-            padding: 12px;
-            margin-top: 12px;
-            color: #ff4444;
+            padding: 14px;
+            margin-top: 15px;
+            color: #ff5555;
             font-size: 12px;
-            line-height: 1.5;
+            line-height: 1.6;
+            text-align: left;
         }
 
-        .loading-ring {
+        .spinner {
             width: 50px;
             height: 50px;
-            border: 3px solid rgba(0,100,255,0.1);
+            border: 3px solid rgba(0,102,255,0.1);
             border-top-color: #0066ff;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.7s linear infinite;
             margin: 0 auto;
         }
 
@@ -252,99 +303,118 @@
             to { transform: rotate(360deg); }
         }
 
-        @media (max-width: 480px) {
-            .container { padding: 25px 18px; }
-            h1 { font-size: 24px; }
-            .big-number { font-size: 90px; }
-            .stats-grid { grid-template-columns: 1fr; }
+        @media (max-width: 500px) {
+            .container {
+                padding: 25px 18px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .player-number {
+                font-size: 100px;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .game-icon {
+                font-size: 56px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="game-logo">🚨</div>
+        <div class="game-icon">🚨</div>
         <h1>Notruf Hamburg</h1>
-        <div class="game-subtitle">Roleplay Server</div>
-        <div class="server-badge" id="serverCodeDisplay">x1qssipp</div>
+        <div class="subtitle">Roleplay Server</div>
+        <div class="server-code-badge" id="serverCodeBadge">x1qssipp</div>
         
-        <div id="statusIndicator" class="status-indicator live">
-            <span class="pulse-dot"></span>
-            <span>LÄDT...</span>
+        <div id="statusDisplay" class="status-badge live">
+            <span class="status-dot"></span>
+            <span>VERBINDE...</span>
         </div>
 
-        <div class="count-display">
-            <div id="playerCountDisplay" class="big-number">
-                <div class="loading-ring"></div>
+        <div class="counter-box">
+            <div id="countDisplay" class="player-number">
+                <div class="spinner"></div>
             </div>
-            <div class="big-label">Spieler Online</div>
+            <div class="player-label">Spieler Online</div>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Maximale Spieler</div>
-                <div class="stat-value" id="maxPlayersStat">--</div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Maximale Spieler</div>
+                <div class="info-value" id="infoMax">--</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Server Code</div>
-                <div class="stat-value code">x1qssipp</div>
+            <div class="info-item">
+                <div class="info-label">Server Code</div>
+                <div class="info-value code">x1qssipp</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Besuche</div>
-                <div class="stat-value" id="visitsStat">--</div>
+            <div class="info-item">
+                <div class="info-label">Besuche Gesamt</div>
+                <div class="info-value" id="infoVisits">--</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Letztes Update</div>
-                <div class="stat-value" id="updateTimeStat" style="font-size:13px;">--</div>
+            <div class="info-item">
+                <div class="info-label">Letztes Update</div>
+                <div class="info-value" id="infoTime" style="font-size:13px;">--</div>
             </div>
         </div>
 
-        <a href="https://www.roblox.com/share?v=v2&code=5ihdm3h6iozgyv" target="_blank" class="join-button">
-            🎮 SERVER BEITRETEN
+        <a href="https://www.roblox.com/games/7711635737" target="_blank" class="join-btn">
+            🎮 JETZT BEITRETEN
         </a>
 
-        <div class="auto-refresh">
-            <span class="refresh-dot"></span>
-            <span>Live-Updates alle 30 Sekunden</span>
+        <div class="refresh-footer">
+            <span class="refresh-indicator"></span>
+            <span>Live • Aktualisiert alle 30 Sekunden</span>
         </div>
         
-        <div id="errorMessage"></div>
+        <div id="errorDisplay"></div>
     </div>
 
     <script>
-        async function getPlayerData() {
-            const response = await fetch('/api/player-count');
-            return await response.json();
+        const API_URL = '/api/player-count';
+        
+        async function fetchPlayerData() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error('Fetch error:', error);
+                throw error;
+            }
         }
 
-        async function refresh() {
-            const countEl = document.getElementById('playerCountDisplay');
-            const statusEl = document.getElementById('statusIndicator');
-            const maxEl = document.getElementById('maxPlayersStat');
-            const visitsEl = document.getElementById('visitsStat');
-            const timeEl = document.getElementById('updateTimeStat');
-            const errorEl = document.getElementById('errorMessage');
+        async function updateUI() {
+            const countEl = document.getElementById('countDisplay');
+            const statusEl = document.getElementById('statusDisplay');
+            const maxEl = document.getElementById('infoMax');
+            const visitsEl = document.getElementById('infoVisits');
+            const timeEl = document.getElementById('infoTime');
+            const errorEl = document.getElementById('errorDisplay');
             
             try {
-                const data = await getPlayerData();
+                const data = await fetchPlayerData();
                 
                 if (data.success) {
-                    // Spieleranzahl anzeigen
+                    // 🎯 Spieleranzahl
                     countEl.textContent = data.playerCount;
                     
-                    // Status aktualisieren
+                    // 🟢 Status
                     if (data.playerCount > 0) {
-                        statusEl.className = 'status-indicator live';
-                        statusEl.innerHTML = '<span class="pulse-dot"></span><span>ONLINE - ' + data.playerCount + ' Spieler</span>';
+                        statusEl.className = 'status-badge live';
+                        statusEl.innerHTML = `<span class="status-dot"></span><span>${data.playerCount} SPIELER ONLINE</span>`;
                     } else {
-                        statusEl.className = 'status-indicator empty';
-                        statusEl.innerHTML = '<span class="pulse-dot"></span><span>SERVER LEER</span>';
+                        statusEl.className = 'status-badge empty';
+                        statusEl.innerHTML = '<span class="status-dot"></span><span>SERVER LEER</span>';
                     }
                     
-                    // Statistiken
+                    // 📊 Details
                     maxEl.textContent = data.maxPlayers;
-                    visitsEl.textContent = data.visits ? data.visits.toLocaleString() : '--';
+                    visitsEl.textContent = data.visits ? data.visits.toLocaleString('de-DE') : '--';
                     
-                    // Zeit
+                    // 🕐 Zeitstempel
                     const now = new Date(data.timestamp);
                     timeEl.textContent = now.toLocaleTimeString('de-DE', {
                         hour: '2-digit',
@@ -352,26 +422,27 @@
                         second: '2-digit'
                     });
                     
-                    // Fehler löschen
+                    // Fehler leeren
                     errorEl.innerHTML = '';
                     
-                    console.log('✅ Spieler:', data.playerCount, '/', data.maxPlayers);
+                    console.log(`✅ ${data.playerCount}/${data.maxPlayers} Spieler | ${data.visits?.toLocaleString('de-DE')} Besuche`);
                     
                 } else {
-                    throw new Error(data.error || 'Unbekannter Fehler');
+                    throw new Error(data.error || 'Keine Daten vom Server');
                 }
                 
             } catch (error) {
-                console.error('❌ Fehler:', error);
+                console.error('❌ Update fehlgeschlagen:', error);
                 
                 countEl.textContent = '--';
-                statusEl.className = 'status-indicator error';
-                statusEl.innerHTML = '<span class="pulse-dot"></span><span>VERBINDUNGSFEHLER</span>';
+                statusEl.className = 'status-badge error';
+                statusEl.innerHTML = '<span class="status-dot"></span><span>KEINE VERBINDUNG</span>';
                 
                 errorEl.innerHTML = `
-                    <div class="error-msg">
-                        ⚠️ ${error.message}<br>
-                        <small>Bitte später erneut versuchen</small>
+                    <div class="error-box">
+                        <strong>⚠️ Verbindungsfehler</strong><br>
+                        ${error.message}<br>
+                        <small>Der Server könnte vorübergehend nicht erreichbar sein.</small>
                     </div>
                 `;
                 
@@ -383,12 +454,14 @@
             }
         }
 
-        // Start
-        refresh();
-        setInterval(refresh, 30000);
-        
+        // 🚀 Start
         console.log('🚨 Notruf Hamburg RP - Monitor gestartet');
+        console.log('🎮 Place ID: 7711635737');
         console.log('🔑 Server: x1qssipp');
+        console.log('⏰ Auto-Update: Alle 30 Sekunden\n');
+        
+        updateUI();
+        setInterval(updateUI, 30000); // Alle 30 Sekunden aktualisieren
     </script>
 </body>
 </html>
