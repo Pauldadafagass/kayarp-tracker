@@ -1,7 +1,7 @@
 {
   "name": "notruf-hamburg-monitor",
   "version": "1.0.0",
-  "description": "Notruf Hamburg RP Spieleranzahl Monitor",
+  "description": "Notruf Hamburg RP - Live Spieleranzahl Monitor",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
