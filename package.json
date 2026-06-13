@@ -1,11 +1,10 @@
 {
-  "name": "kayarp-player-counter",
+  "name": "notruf-hamburg-monitor",
   "version": "1.0.0",
-  "description": "KayaRP Live Spieleranzahl Monitor",
+  "description": "Notruf Hamburg RP Spieleranzahl Monitor",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
